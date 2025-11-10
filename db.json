@@ -34,6 +34,7 @@
     {
       "id": 2,
       "name": "Thắng",
+      "email": "thang@abc.com",
       "wallets": [
         {
           "name": "Card",
