@@ -3,7 +3,7 @@ import React, {useEffect} from "react";
 import Body from "@/src/components/body";
 import UserService from "@/src/service/dataService";
 
-export default function List() {
+export default function Test() {
     const [users, setUsers] = React.useState([]);
     useEffect(() => {
         UserService.getData().then((response) => {
