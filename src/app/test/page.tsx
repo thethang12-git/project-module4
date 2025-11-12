@@ -1,21 +1,28 @@
 "use client"
-import React, {useEffect} from "react";
-import Body from "@/src/components/body";
-import UserService from "@/src/service/dataService";
+import { useState } from 'react';
+import Button from 'react-bootstrap/Button';
+import Offcanvas from 'react-bootstrap/Offcanvas';
 
-export default function Test() {
-    const [users, setUsers] = React.useState([]);
-    useEffect(() => {
-        UserService.getData().then((response) => {
-            const getTransactions = response.data.map((itm: { transactions: any; }) =>  itm.transactions );
-            setUsers(getTransactions);
-        }).catch((error) => {
-            console.error(error);
-        });
-    }, []);
+function test() {
+    const [show, setShow] = useState(false);
+    const handleClose = () => setShow(false);
+    const handleShow = () => setShow(true);
+
     return (
         <>
-            <Body list={users}></Body>
+            <Button variant="primary" onClick={handleShow} className="me-0.5">
+                close
+            </Button>
+            <Offcanvas show={show} onHide={handleClose} >
+                <Offcanvas.Header closeButton>
+                    <Offcanvas.Title>Offcanvas</Offcanvas.Title>
+                </Offcanvas.Header>
+                <Offcanvas.Body>
+                    Nội dung của side bar
+                </Offcanvas.Body>
+            </Offcanvas>
         </>
     );
 }
+
+export default test

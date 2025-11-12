@@ -1,9 +1,5 @@
-import ContactForm from "@/src/components/register";
-
-export default function Home() {
-  return (
-    <>
-        <div>xin chào</div>
-    </>
-  );
+"use client"
+import { redirect } from "next/navigation";
+export default function Root() {
+        redirect("/home");
 }
