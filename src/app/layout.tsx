@@ -1,7 +1,7 @@
-import "./globals.css"
 import React from "react";
 import {Metadata} from "next";
-import 'bootstrap/dist/css/bootstrap.min.css';
+// import 'bootstrap/dist/css/bootstrap.min.css';
+import "./globals.css";
 
 export const metadata: Metadata = {
   title: "Project",

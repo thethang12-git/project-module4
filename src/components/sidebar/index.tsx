@@ -1,4 +1,5 @@
 "use client"
+import 'bootstrap/dist/css/bootstrap.min.css';
 import Offcanvas from "react-bootstrap/Offcanvas";
 import {useState} from "react";
 import { GiHamburgerMenu } from "react-icons/gi";
