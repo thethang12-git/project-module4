@@ -24,15 +24,15 @@ function GoogleButton() {
               .then(async user => {
                 const validate = await UserService.validateUser(user.email)
                 if(validate) {
-                    alert("Google user info: " + user.email + "chuyển trang");
+                    alert("Google sidebarHeader info: " + user.email + "chuyển trang");
                     router.push("/");
                 }
                 else {
-                    alert("Khoong tim thay user");
+                    alert("Khoong tim thay sidebarHeader");
                 }
               })
               .catch(err => {
-                console.error("Failed to fetch user info", err);
+                console.error("Failed to fetch sidebarHeader info", err);
               });
           }}
         onError={() => {

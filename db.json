@@ -11,6 +11,13 @@
       "username": "thethang@gmail.com",
       "password": "123123",
       "google_id": null
+    },
+    {
+      "id": "c0de",
+      "name": "thethang",
+      "password": "123123",
+      "OTP": 534762,
+      "username": "thethang.18.12@gmail.com"
     }
   ],
   "wallets": [

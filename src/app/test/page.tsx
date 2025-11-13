@@ -1,28 +1,19 @@
-"use client"
-import { useState } from 'react';
-import Button from 'react-bootstrap/Button';
-import Offcanvas from 'react-bootstrap/Offcanvas';
-
-function test() {
-    const [show, setShow] = useState(false);
-    const handleClose = () => setShow(false);
-    const handleShow = () => setShow(true);
+'use client';
+import { Button } from "@mui/material";
+import { useAppDispatch, useAppSelector } from '@/src/store/hooks';
+import {useRouter} from "next/navigation";
+import  {resetUser, setUser} from "@/src/store/slices/user";
+import 'bootstrap/dist/css/bootstrap.min.css';
+export default function Counter() {
+    const router = useRouter();
+    const user = useAppSelector((state) => state.user.value);
+    const dispatch = useAppDispatch();
 
     return (
-        <>
-            <Button variant="primary" onClick={handleShow} className="me-0.5">
-                close
-            </Button>
-            <Offcanvas show={show} onHide={handleClose} >
-                <Offcanvas.Header closeButton>
-                    <Offcanvas.Title>Offcanvas</Offcanvas.Title>
-                </Offcanvas.Header>
-                <Offcanvas.Body>
-                    Nội dung của side bar
-                </Offcanvas.Body>
-            </Offcanvas>
-        </>
+        <div>
+            <h1>User: {user}</h1>
+            <Button variant={"outlined"} style={{height:"fit-content"}} onClick={() => dispatch(resetUser())}>Reset tên user </Button>
+            <Button variant={"outlined"} style={{height:"fit-content"}} onClick={() =>router.push("/") }> chuyển trang home </Button>
+        </div>
     );
 }
-
-export default test

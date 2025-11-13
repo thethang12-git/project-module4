@@ -3,9 +3,9 @@ import React, {useEffect} from "react";
 
 export default function Body({list}: any) {
     useEffect(() => {
-        console.log("Danh sách user:", list);
+        console.log("Danh sách sidebarHeader:", list);
     }, [list]);
     return (
-        <div>Gọi dữ liệu từ test để hiển thị dữ liệu transactions trong component/body</div>
+        <div>Dữ liieuej của BoDY ở đây</div>
     );
 }

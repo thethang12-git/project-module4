@@ -5,8 +5,10 @@ import emailjs from "@emailjs/browser";
 import { Button, TextField, Box, Typography } from "@mui/material";
 import GoogleButton from "../OathGoogle_button";
 import UserService from "@/src/service/dataService";
+import {useRouter} from "next/navigation";
 
 function Login() {
+  const router = useRouter();
   const [toggle, setToggle] = useState(true); 
   const [otpSent, setOtpSent] = useState(false);
   const otp = useRef<number | undefined>(undefined);
@@ -18,8 +20,8 @@ function Login() {
       OTP: "",
     },
     onSubmit: async (values) => {
+        const user = await UserService.validateUser(values.email, values.password)
       if (toggle) {
-          const user = await UserService.validateUser(values.email, values.password)
           if (user) {
               otp.current = Math.floor(100000 + Math.random() * 900000);
           const template = {
@@ -46,7 +48,10 @@ function Login() {
           }
       } else {
         if (Number(values.OTP) === otp.current) {
+            localStorage.setItem("email", JSON.stringify(values.email));
+            localStorage.setItem("user", JSON.stringify(user.name ));
           alert("Đăng nhập thành công,chuyển trang!!");
+          await router.push("/home");
         } else {
           alert("OTP sai, thử lại!");
         }

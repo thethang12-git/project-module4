@@ -1,7 +1,7 @@
 import React from "react";
 import {Metadata} from "next";
-// import 'bootstrap/dist/css/bootstrap.min.css';
 import "./globals.css";
+import Providers from '../store/provider';
 
 export const metadata: Metadata = {
   title: "Project",
@@ -15,7 +15,9 @@ export default function RootLayout({
   return (
     <html lang="vi">
       <body>
-        {children}
+      <Providers >
+          {children}
+      </Providers>
       </body>
     </html>
   );
