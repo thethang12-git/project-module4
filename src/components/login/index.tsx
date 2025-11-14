@@ -2,7 +2,7 @@
 import React, { useRef, useState } from "react";
 import { useFormik } from "formik";
 import emailjs from "@emailjs/browser";
-import { Button, TextField, Box, Typography } from "@mui/material";
+import { Button, TextField, Box, Typography, Link } from "@mui/material";
 import GoogleButton from "../OathGoogle_button";
 import UserService from "@/src/service/dataService";
 import {useRouter} from "next/navigation";
@@ -62,6 +62,8 @@ function Login() {
   return (
     <Box
       sx={{
+        // backgroundImage: "url('loginBackground.jpg')",
+        // backgroundSize:'cover',
         height: "100vh",
         display: "flex",
         justifyContent: "center",
@@ -78,6 +80,8 @@ function Login() {
           border: "1px solid #ccc",
           borderRadius: 2,
           boxShadow: 2,
+          bgcolor: "rgba(255, 255, 255, 0)",
+          backdropFilter: "blur(8px)",
         }}
       >
         <Typography variant="h5" align="center" mb={3}>
@@ -117,7 +121,6 @@ function Login() {
             onChange={formik.handleChange}
           />
         )}
-
         <Button
           type="submit"
           variant="contained"
@@ -126,7 +129,15 @@ function Login() {
         >
           {toggle ? "Gửi OTP" : "Đăng nhập"}
         </Button>
-
+          <div style={{textAlign: "right"}}>
+              <Link
+                  component="button"
+                  variant="body2"
+                  onClick={() => router.push("/register")}
+              >
+                  Đăng ký
+              </Link>
+          </div>
         <Typography align="center" mt={0.5} >
           OR
         </Typography>

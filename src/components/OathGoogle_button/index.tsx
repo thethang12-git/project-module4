@@ -26,6 +26,7 @@ function GoogleButton() {
                 if(validate) {
                     localStorage.setItem("email", JSON.stringify(user.email));
                     localStorage.setItem("user", JSON.stringify(user.name ));
+                    localStorage.setItem("avatar", JSON.stringify(user.picture));
                     alert("Google user info: " + user.email + "chuyển trang");
                     router.push("/");
                 }

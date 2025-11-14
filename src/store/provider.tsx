@@ -4,6 +4,7 @@ import { Provider } from 'react-redux';
 import { store } from './store';
 import React, {useEffect} from "react";
 import {usePathname, useRouter} from "next/navigation";
+import Popup from "@/src/components/popUp";
 
 interface ProvidersProps {
     children: React.ReactNode;
@@ -24,7 +25,12 @@ function Providers({ children }: ProvidersProps) {
             router.push('/login');
         }
     }, []);
-    return <Provider store={store}>{children}</Provider>;
+    return (
+        <Provider store={store}>
+            {children}
+        </Provider>
+        )
+
 }
 
 export default Providers

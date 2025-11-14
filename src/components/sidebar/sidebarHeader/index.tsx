@@ -7,14 +7,19 @@ import Offcanvas from "react-bootstrap/Offcanvas";
 import { Typography } from "@mui/material";
 export default function SideBarUser() {
     const userStored = useAppSelector((state) => state.user.value);
+    const [avatar, setAvatar] = useState<string | null>(null);
     const dispatch = useAppDispatch();
     const [currentEmail,setEmail] = useState("");
     useEffect(() => {
         const user = localStorage.getItem("user");
         const email = localStorage.getItem("email");
+        const avatar = localStorage.getItem("avatar");
         if(user && email)  {
             dispatch(setUser(JSON.parse(user)));
             setEmail(email);
+            if (avatar) {
+                setAvatar(JSON.parse(avatar));
+            }
         }
     }, []);
     return (
@@ -22,7 +27,7 @@ export default function SideBarUser() {
             <Avatar
                 style={{display:"flex", justifyContent:"center",alignSelf:"center"}}
                 alt="Remy Sharp"
-                src="/static/images/avatar/1.jpg"
+                src= {avatar || 'https://cdn2.fptshop.com.vn/unsafe/1920x0/filters:format(webp):quality(75)/2024_2_5_638427405635366659_avt-cho-cute.jpg'}
                 sx={{ width: 56, height: 56}}
             />
             <Offcanvas.Header style={{display:"flex", justifyContent:"center",padding:'0'}}>
