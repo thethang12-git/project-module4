@@ -5,6 +5,7 @@ import SideBar from "@/src/components/sidebar";
 import React from "react";
 import TotalWallets from "@/src/components/header/total&addTransaction/total";
 import AddTransactionButton from "@/src/components/header/total&addTransaction/addTransaction";
+import DatePickerButton from "@/src/components/header/datePickerButton";
 
 export default function Header() {
     return (
@@ -16,7 +17,7 @@ export default function Header() {
                 <div style={{width: "100%" , display: "flex" ,flexDirection: "row",justifyContent: "space-evenly" ,marginTop:'1rem'}}  >
                     <FilterButton title={'Wallet, truyền dữ liệu ở đây'}/>
                     <FilterButton title={'Categories, truyền dữ liệu ở đây'}/>
-                    <FilterButton title={'Date, select time zone'}/>
+                    <DatePickerButton/>
                 </div>
                 <div style={{width:'100%',display: "flex" ,flexDirection: "row",justifyContent:"space-between",padding:'0 20px',marginTop:'20px'}}>
                     <TotalWallets/>
