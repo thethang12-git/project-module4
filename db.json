@@ -17,6 +17,13 @@
       "name": "Thế Thắng",
       "password": "",
       "username": "thethang.18.12@gmail.com"
+    },
+    {
+      "id": "6584",
+      "name": "maianhkhoi",
+      "password": "123456",
+      "OTP": 506565,
+      "username": "maianhkhoi04@gmail.com"
     }
   ],
   "wallets": [
