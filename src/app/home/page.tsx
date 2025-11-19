@@ -43,7 +43,7 @@ export default function HomePage() {
             UserService.getTransactionsByDate(trueId,formattedDate).then( res => {
             // load transactions from DB
             setTransaction(res.data)
-            let transactions= res.data
+            const transactions= res.data
             // calculate total
             const totall = transactions.reduce((acc:number,value : any)=> {
                 return acc += parseFloat(value.money)
@@ -93,7 +93,7 @@ export default function HomePage() {
                     <div className="absolute bottom-0 -right-20 w-96 h-96 bg-purple-200/20 rounded-full blur-3xl"></div>
                 </div>
                 {/* Header */}
-                <HeaderHome />
+                <HeaderHome setTransactions={setTransaction}/>
 
                 {/* Main Content */}
                 <div className="relative container mx-auto px-6 py-10 max-w-6xl">
