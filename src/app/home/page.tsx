@@ -3,9 +3,25 @@ import HeaderHome from "@/src/components/home/HeaderHome"
 import SummaryCard from "@/src/components/home/SummaryCard"
 import DateCard from "@/src/components/home/DateCard"
 import TransactionList from "@/src/components/home/transactionList"
-import {useEffect, useRef, useState } from "react"
+import { useCallback, useEffect, useState } from "react"
 import UserService from "@/src/service/dataService"
 import { Button } from "@mui/material"
+
+const monthNames = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"]
+const monthMap: Record<string, string> = {
+    Jan: "01",
+    Feb: "02",
+    Mar: "03",
+    Apr: "04",
+    May: "05",
+    Jun: "06",
+    Jul: "07",
+    Aug: "08",
+    Sep: "09",
+    Oct: "10",
+    Nov: "11",
+    Dec: "12"
+}
 
 export default function HomePage() {
     const [transactions,setTransaction] = useState<any[]>([])
@@ -13,22 +29,10 @@ export default function HomePage() {
     const [inFlow,setInFlow] = useState<number>(0)
     const [outFlow,setOutFlow] = useState<number>(0)
     const [total,setTotal] = useState<number>(0)
-    const monthNames = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
-    const monthMap: { [key: string]: string } = {
-        Jan: '01',
-        Feb: '02',
-        Mar: '03',
-        Apr: '04',
-        May: '05',
-        Jun: '06',
-        Jul: '07',
-        Aug: '08',
-        Sep: '09',
-        Oct: '10',
-        Nov: '11',
-        Dec: '12'
-    };
     const todayDate = new Date();
+    const [wallets, setWallets] = useState<any[]>([])
+    const [recentWallet, setRecentWallet] = useState<any | null>(null)
+    const [walletLoading, setWalletLoading] = useState<boolean>(false)
     const [day, setDay] = useState({
         day: todayDate.getDate(),
         month: monthNames[todayDate.getMonth()],
@@ -81,12 +85,27 @@ export default function HomePage() {
                 setInFlow(value.inflow)
                 setOutFlow(value.outflow)
                 }
-            )   
+            )
             .catch(err => 
                 console.log(err))
         }
         },[day.month,day.year]);
-        
+    //     phần của Duy
+    const handleWalletCreated = (wallet: any) => {
+        setWallets(prev => [wallet, ...prev]);
+        setRecentWallet(wallet);
+    };
+
+    const handleWalletUpdated = (updatedWallet: any) => {
+        setWallets(prev => prev.map(wallet => (wallet.id === updatedWallet.id ? updatedWallet : wallet)));
+        setRecentWallet(updatedWallet);
+    };
+
+    // const handleTransactionCreated = useCallback(() => {
+    //     fetchTransactionsForSelectedDay()
+    //     fetchTransactionsForMonth()
+    // }, [fetchTransactionsForMonth, fetchTransactionsForSelectedDay])
+
     return (
         <>
             <div className="min-h-screen bg-linear-to-br from-gray-50 via-blue-50/20 to-purple-50/20">
@@ -96,7 +115,16 @@ export default function HomePage() {
                     <div className="absolute bottom-0 -right-20 w-96 h-96 bg-purple-200/20 rounded-full blur-3xl"></div>
                 </div>
                 {/* Header */}
-                <HeaderHome transactions= { transactions} setTransaction={setTransaction}/>
+                <HeaderHome
+                    total={total}
+                    transactions= { transactions}
+                    setTransaction={setTransaction}
+                    onWalletCreated={handleWalletCreated}
+                    onWalletUpdated={handleWalletUpdated}
+                    // onTransactionCreated={handleTransactionCreated}
+                    wallets={wallets}
+                    recentWallet={recentWallet}
+                />
 
                 {/* Main Content */}
                 <div className="relative container mx-auto px-6 py-10 max-w-6xl">

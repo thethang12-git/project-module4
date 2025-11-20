@@ -1,5 +1,10 @@
 import axios from "axios";
 
+const normalizeUserId = (userId: any) => {
+    if (userId === null || userId === undefined) return undefined;
+    return typeof userId === "string" ? userId : String(userId);
+};
+
 class UserService {
     static async getData() {
         return await axios.get("http://localhost:3001/users")
@@ -55,6 +60,46 @@ class UserService {
     }
     static async deleteCategory(categoryId:any){
         return await axios.delete(`http://localhost:3001/categories/${categoryId}`)
+    }
+    static async getWallets(userID: any) {
+        const userId = normalizeUserId(userID);
+        return await axios.get("http://localhost:3001/wallets", { params: { userId } });
+    }
+
+    static async createWallet(wallet: any) {
+        const payload = {
+            ...wallet,
+            userId: normalizeUserId(wallet.userId),
+        };
+        return await axios.post("http://localhost:3001/wallets", payload);
+    }
+
+    static async updateWallet(walletId: any, updates: any) {
+        if (!walletId) {
+            throw new Error("walletId is required to update wallet");
+        }
+        return await axios.patch(`http://localhost:3001/wallets/${walletId}`, updates);
+    }
+
+    static async createTransaction(transaction: any) {
+        if (!transaction) {
+            throw new Error("transaction payload is required");
+        }
+
+        const generatedId =
+            transaction?.id ||
+            (typeof crypto !== "undefined" && typeof crypto.randomUUID === "function"
+                ? crypto.randomUUID()
+                : Date.now().toString());
+
+        const payload = {
+            ...transaction,
+            id: generatedId,
+            userId: normalizeUserId(transaction.userId),
+            date: transaction.date || new Date().toISOString().slice(0, 10),
+        };
+
+        return await axios.post("http://localhost:3001/transactions", payload);
     }
 }
 export default UserService;
