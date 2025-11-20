@@ -60,7 +60,7 @@ export default function HomePage() {
             console.log(err);
         } )
     }
-    }, [day])
+    }, [day,wallets])
     // Get transactions by month
     useEffect(() => {
         const userId = localStorage.getItem("userId");
@@ -89,8 +89,18 @@ export default function HomePage() {
             .catch(err => 
                 console.log(err))
         }
-        },[day.month,day.year]);
+        },[day.month,day.year,wallets]);
     //     phần của Duy
+    useEffect(() => {
+        const userId = localStorage.getItem("userId");
+        if(!userId) return;
+        const trueId = JSON.parse(userId);
+        setWalletLoading(true);
+        UserService.getWallets(trueId)
+            .then(res => setWallets(res.data ?? []))
+            .catch(err => console.log(err))
+            .finally(() => setWalletLoading(false));
+    }, []);
     const handleWalletCreated = (wallet: any) => {
         setWallets(prev => [wallet, ...prev]);
         setRecentWallet(wallet);
