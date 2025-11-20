@@ -1,141 +1,141 @@
 {
-  "users": [
-    {
-      "id": "1",
-      "name": "Nguyen Duc Duy",
-      "username": "nguyenducduy@gmail.com",
-      "password": "123456"
-    },
-    {
-      "id": "2",
-      "name": "Thế Thắng",
-      "username": "thethang@gmail.com",
-      "password": "123123"
-    },
-    {
-      "id": "27bd",
-      "name": "Thế Thắng",
-      "password": "",
-      "username": "thethang.18.12@gmail.com"
-    },
-    {
-      "id": "6584",
-      "name": "maianhkhoi",
-      "password": "123456",
-      "OTP": 506565,
-      "username": "maianhkhoi04@gmail.com"
-    }
-  ],
-  "wallets": [
-    {
-      "id": "1",
-      "userId": 1,
-      "icon": ":moneybag:",
-      "name": "Main Wallet",
-      "default_balance": 1000,
-      "current_balance": 850
-    },
-    {
-      "id": "2",
-      "userId": 2,
-      "icon": ":bank:",
-      "name": "Savings",
-      "default_balance": 5000,
-      "current_balance": 5200
-    }
-  ],
-  "categories": [
-    {
-      "id": "1",
-      "userId": 1,
-      "name": "Salary",
-      "is_income": true
-    },
-    {
-      "id": "2",
-      "userId": 1,
-      "name": "Food",
-      "is_income": false
-    },
-    {
-      "id": "3",
-      "userId": 1,
-      "name": "Transportation",
-      "is_income": false
-    },
-    {
-      "id": "4",
-      "userId": 2,
-      "name": "Investment",
-      "is_income": true
-    }
-  ],
-  "transactions": [
-    {
-      "userId": "1",
-      "id": "1",
-      "name": "Monthly Salary",
-      "money": 2000,
-      "categoryId": 1,
-      "walletId": 1,
-      "date": "2025-11-01",
-      "note": "October salary",
-      "currency" : "₫"
-    },
-    {
-      "userId": "1",
-      "id": "2",
-      "name": "Lunch",
-      "money": -100000,
-      "categoryId": 2,
-      "walletId": 1,
-      "date": "2025-11-02",
-      "note": "Pizza with friends",
-      "currency" : "₫"
-    },
-    {
-      "userId": "1",
-      "id": "3",
-      "name": "Bus Ticket",
-      "money": -25000,
-      "categoryId": 3,
-      "walletId": 1,
-      "date": "2025-11-03",
-      "note": "Daily commute",
-      "currency" : "₫"
-    },
-    {
-      "userId": "1",
-      "id": "4",
-      "name": "Bus Ticket",
-      "money": -25000,
-      "categoryId": 3,
-      "walletId": 1,
-      "date": "2025-11-30",
-      "note": "Daily commute",
-      "currency" : "₫"
-    },
-    {
-      "userId": "1",
-      "id": "5",
-      "name": "Bus Ticket",
-      "money": -25000,
-      "categoryId": 3,
-      "walletId": 1,
-      "date": "2025-11-01",
-      "note": "Daily commute",
-      "currency" : "₫"
-    },
-    {
-      "userId": "2",
-      "id": "6",
-      "name": "Stock Profit",
-      "money": 300,
-      "categoryId": 4,
-      "walletId": 2,
-      "date": "2025-11-05",
-      "note": "Gained from Tesla stock",
-      "currency" : "₫"
-    }
-  ]
+    "users": [
+      {
+        "id": "1",
+        "name": "Nguyen Duc Duy",
+        "username": "nguyenducduy@gmail.com",
+        "password": "123456"
+      },
+      {
+        "id": "2",
+        "name": "Thế Thắng",
+        "username": "thethang@gmail.com",
+        "password": "123123"
+      },
+      {
+        "id": "27bd",
+        "name": "Thế Thắng",
+        "password": "",
+        "username": "thethang.18.12@gmail.com"
+      },
+      {
+        "id": "6584",
+        "name": "maianhkhoi",
+        "password": "123456",
+        "OTP": 506565,
+        "username": "maianhkhoi04@gmail.com"
+      }
+    ],
+    "wallets": [
+      {
+        "id": "1",
+        "userId": 1,
+        "icon": ":moneybag:",
+        "name": "Main Wallet",
+        "default_balance": 1000,
+        "current_balance": 850
+      },
+      {
+        "id": "2",
+        "userId": 2,
+        "icon": ":bank:",
+        "name": "Savings",
+        "default_balance": 5000,
+        "current_balance": 5200
+      }
+    ],
+    "categories": [
+      {
+        "id": "1",
+        "userId": 1,
+        "name": "Salary",
+        "is_income": true
+      },
+      {
+        "id": "2",
+        "userId": 1,
+        "name": "Food",
+        "is_income": false
+      },
+      {
+        "id": "3",
+        "userId": 1,
+        "name": "Transportation",
+        "is_income": false
+      },
+      {
+        "id": "4",
+        "userId": 2,
+        "name": "Investment",
+        "is_income": true
+      }
+    ],
+    "transactions": [
+      {
+        "userId": "1",
+        "id": "1",
+        "name": "Monthly Salary",
+        "money": 2000,
+        "categoryId": 1,
+        "walletId": 1,
+        "date": "2025-11-01",
+        "note": "October salary",
+        "currency": "₫"
+      },
+      {
+        "userId": "1",
+        "id": "2",
+        "name": "Lunch",
+        "money": -100000,
+        "categoryId": 2,
+        "walletId": 1,
+        "date": "2025-11-02",
+        "note": "Pizza with friends",
+        "currency": "₫"
+      },
+      {
+        "userId": "1",
+        "id": "3",
+        "name": "Bus Ticket",
+        "money": -25000,
+        "categoryId": 3,
+        "walletId": 1,
+        "date": "2025-11-03",
+        "note": "Daily commute",
+        "currency": "₫"
+      },
+      {
+        "userId": "1",
+        "id": "4",
+        "name": "Bus Ticket",
+        "money": -25000,
+        "categoryId": 3,
+        "walletId": 1,
+        "date": "2025-11-30",
+        "note": "Daily commute",
+        "currency": "₫"
+      },
+      {
+        "userId": "1",
+        "id": "5",
+        "name": "Bus Ticket",
+        "money": -25000,
+        "categoryId": 3,
+        "walletId": 1,
+        "date": "2025-11-01",
+        "note": "Daily commute",
+        "currency": "₫"
+      },
+      {
+        "userId": "2",
+        "id": "6",
+        "name": "Stock Profit",
+        "money": 300,
+        "categoryId": 4,
+        "walletId": 2,
+        "date": "2025-11-05",
+        "note": "Gained from Tesla stock",
+        "currency": "₫"
+      }
+    ]
 }

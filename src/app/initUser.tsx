@@ -3,7 +3,8 @@ import { useEffect } from "react";
 import { useAppDispatch } from "@/src/store/hooks";
 import { setUser } from "@/src/store/slices/user";
 import { usePathname, useRouter } from "next/navigation";
-
+import { setTransactions } from "@/src/store/slices/transactions";
+import UserService from "@/src/service/dataService";
 export default function InitUser() {
     const dispatch = useAppDispatch();
     const pathname = usePathname();
@@ -18,7 +19,18 @@ export default function InitUser() {
                 router.push("/");
             }
         }
-    }, [pathname]);
+    }, [dispatch, pathname, router]);
+    useEffect(() => {
+        const user = localStorage.getItem("userId");
+        if (!user) return;
 
+        const userTrueId = JSON.parse(user);
+        console.log(userTrueId);
+        UserService.getTransactions(userTrueId)
+            .then((result) => {
+                dispatch(setTransactions(result.data))
+        })
+            .catch((error) => {console.log(error)});
+    }, [dispatch]);
     return null;
 }
