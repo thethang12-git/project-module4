@@ -82,6 +82,21 @@ export default function HomePage() {
         }
     }, [day.month, day.year])
 
+    const fetchWallets = useCallback(async () => {
+        const userId = localStorage.getItem("userId");
+        if(!userId) return;
+        const trueId = JSON.parse(userId);
+        setWalletLoading(true);
+        try {
+            const res = await UserService.getWallets(trueId);
+            setWallets(res.data ?? []);
+        } catch (err) {
+            console.log(err);
+        } finally {
+            setWalletLoading(false);
+        }
+    }, []);
+
 // get transaction by date
     useEffect(() => {
         fetchTransactionsForSelectedDay()
@@ -91,15 +106,8 @@ export default function HomePage() {
         fetchTransactionsForMonth()
         },[fetchTransactionsForMonth]);
     useEffect(() => {
-        const userId = localStorage.getItem("userId");
-        if(!userId) return;
-        const trueId = JSON.parse(userId);
-        setWalletLoading(true);
-        UserService.getWallets(trueId)
-            .then(res => setWallets(res.data ?? []))
-            .catch(err => console.log(err))
-            .finally(() => setWalletLoading(false));
-    }, []);
+        fetchWallets();
+    }, [fetchWallets]);
 
     const handleWalletCreated = (wallet: any) => {
         setWallets(prev => [wallet, ...prev]);
@@ -114,7 +122,8 @@ export default function HomePage() {
     const handleTransactionCreated = useCallback(() => {
         fetchTransactionsForSelectedDay()
         fetchTransactionsForMonth()
-    }, [fetchTransactionsForMonth, fetchTransactionsForSelectedDay])
+        fetchWallets() // Fetch lại wallets để cập nhật số dư
+    }, [fetchTransactionsForMonth, fetchTransactionsForSelectedDay, fetchWallets])
 
     const handleWalletDeleted = (walletId: string | number) => {
         setWallets((prev: any[]) => prev.filter(wallet => wallet.id !== walletId));

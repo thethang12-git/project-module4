@@ -1,4 +1,5 @@
 import axios from "axios";
+import { DEFAULT_CATEGORIES } from "../constants/defaultCategories";
 
 const normalizeUserId = (userId: any) => {
     if (userId === null || userId === undefined) return undefined;
@@ -132,6 +133,20 @@ class UserService {
         };
 
         return await axios.post("http://localhost:3001/transactions", payload);
+    }
+
+    static async getCategories(userID: any) {
+        const userId = normalizeUserId(userID);
+        const response = await axios.get("http://localhost:3001/categories", { params: { userId } });
+        
+        // Merge default categories with user categories
+        const userCategories = Array.isArray(response.data) ? response.data : [];
+        const allCategories = [...DEFAULT_CATEGORIES, ...userCategories];
+        
+        return {
+            ...response,
+            data: allCategories,
+        };
     }
 }
 export default UserService;

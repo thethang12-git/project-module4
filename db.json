@@ -74,7 +74,7 @@
       "description": "",
       "icon": ":wallet:",
       "default_balance": 0,
-      "current_balance": 100000
+      "current_balance": 50000
     },
     {
       "id": "4dd6",
@@ -83,7 +83,7 @@
       "description": "dùng để đi chợ",
       "icon": ":wallet:",
       "default_balance": 0,
-      "current_balance": 20000
+      "current_balance": 19000
     }
   ],
   "categories": [
@@ -238,6 +238,50 @@
       "note": "",
       "currency": "₫",
       "date": "2025-11-21"
+    },
+    {
+      "id": "a21a71e3-151c-47c4-b918-c84e5c6d9876",
+      "userId": "bbb83b3c-7239-4662-b787-7068922dcbca",
+      "walletId": "6d69",
+      "categoryId": "default-do-an",
+      "money": -10000,
+      "name": "Đồ ăn",
+      "date": "2025-11-23",
+      "note": "ăn sáng",
+      "currency": "₫"
+    },
+    {
+      "id": "4e2a691d-4195-4726-b400-bbc7bea80a36",
+      "userId": "bbb83b3c-7239-4662-b787-7068922dcbca",
+      "walletId": "6d69",
+      "categoryId": "default-mua-sam",
+      "money": -20000,
+      "name": "Mua sắm",
+      "date": "2025-11-23",
+      "note": "mua kẹo",
+      "currency": "₫"
+    },
+    {
+      "id": "696d6482-07bb-4c8d-b683-9d983dc4b50b",
+      "userId": "bbb83b3c-7239-4662-b787-7068922dcbca",
+      "walletId": "4dd6",
+      "categoryId": "default-dich-vu",
+      "money": -1000,
+      "name": "Dịch vụ",
+      "date": "2025-11-23",
+      "note": "",
+      "currency": "₫"
+    },
+    {
+      "id": "f749df20-b1f5-484f-980c-2f6b4380466b",
+      "userId": "bbb83b3c-7239-4662-b787-7068922dcbca",
+      "walletId": "6d69",
+      "categoryId": "default-du-lich",
+      "money": -20000,
+      "name": "Du lịch",
+      "date": "2025-11-23",
+      "note": "",
+      "currency": "₫"
     }
   ]
 }

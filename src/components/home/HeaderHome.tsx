@@ -11,6 +11,7 @@ import DateRangePicker from "@/src/components/dateRangePicker";
 import AddWalletModal from "@/src/components/wallet/AddWalletModal";
 import EditWalletModal from "@/src/components/wallet/EditWalletModal";
 import AddMoneyModal from "@/src/components/wallet/AddMoneyModal";
+import AddTransactionModal from "@/src/components/home/AddTransactionModal";
 import UserService from "@/src/service/dataService";
 
 interface HeaderHomeProps {
@@ -42,7 +43,15 @@ export default function HeaderHome({
         }),
         []
     );
-    const formattedTotal = formatCurrency.format(total ?? 0);
+    
+    // Calculate total balance from all wallets
+    const totalBalance = useMemo(() => {
+        return wallets.reduce((sum, wallet) => {
+            return sum + (parseFloat(wallet.current_balance) || 0);
+        }, 0);
+    }, [wallets]);
+    
+    const formattedTotal = formatCurrency.format(totalBalance);
     const [avatar, setAvatar] = useState<string | null>(null);
     const [isWalletModalOpen, setIsWalletModalOpen] = useState(false);
     const [isWalletInfoOpen, setIsWalletInfoOpen] = useState(false);
@@ -55,6 +64,7 @@ export default function HeaderHome({
     const [walletForDeposit, setWalletForDeposit] = useState<any | null>(null);
     const [deletingWalletId, setDeletingWalletId] = useState<string | number | null>(null);
     const [deleteError, setDeleteError] = useState<string | null>(null);
+    const [isAddTransactionModalOpen, setIsAddTransactionModalOpen] = useState(false);
     useEffect(() => {
         const user = localStorage.getItem("user");
         const email = localStorage.getItem("email");
@@ -165,10 +175,12 @@ export default function HeaderHome({
                                             {wallets.length} ví
                                         </span>
                                     </div>
-                                    <div className="max-h-64 space-y-2 overflow-y-auto">
+                                    <div className="max-h-64 space-y-3 overflow-y-auto">
                                         <div
-                                            className={`flex items-center justify-between rounded-xl border px-3 py-2 transition cursor-pointer ${
-                                                selectedWalletId === null ? "border-green-400 bg-green-50" : "border-gray-100 bg-gray-50 hover:border-green-200"
+                                            className={`rounded-xl border p-3 transition-all duration-200 cursor-pointer ${
+                                                selectedWalletId === null 
+                                                    ? "border-green-400 bg-linear-to-br from-green-50 to-white shadow-md" 
+                                                    : "border-gray-200 bg-white hover:border-green-300 hover:shadow-md"
                                             }`}
                                             role="button"
                                             tabIndex={0}
@@ -185,59 +197,78 @@ export default function HeaderHome({
                                                 }
                                             }}
                                         >
-                                            <div className="flex items-center gap-2">
-                                                <div className="flex h-8 w-8 items-center justify-center rounded-full bg-green-100 text-green-600">
-                                                    <FiGlobe />
+                                            <div className="flex items-center justify-between gap-3">
+                                                <div className="flex items-center gap-2.5">
+                                                    <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-linear-to-br from-green-100 to-green-50 text-green-600 shadow-sm">
+                                                        <FiGlobe className="text-base" />
+                                                    </div>
+                                                    <div>
+                                                        <p className="text-sm font-semibold text-gray-900">Total</p>
+                                                        <p className="text-xs text-gray-500">Tổng tất cả ví</p>
+                                                    </div>
                                                 </div>
-                                                <div>
-                                                    <p className="text-sm font-semibold text-gray-900">Total</p>
-                                                    <p className="text-xs text-gray-500">Tổng tất cả ví</p>
+                                                <div className="text-right">
+                                                    <p className="text-[10px] font-medium uppercase tracking-wide text-gray-400 mb-0.5">
+                                                        Số dư
+                                                    </p>
+                                                    <p className="text-base font-bold text-gray-900">{formattedTotal}</p>
                                                 </div>
-                                            </div>
-                                            <div className="text-right">
-                                                <p className="text-xs text-gray-400">Số dư</p>
-                                                <p className="text-sm font-semibold text-gray-900">{formattedTotal}</p>
                                             </div>
                                         </div>
-                                        <p className="text-xs font-semibold text-gray-400 px-1 pt-1">Included in Total</p>
+                                        <div className="px-1">
+                                            <p className="text-[10px] font-semibold uppercase tracking-wider text-gray-400">
+                                                Included in Total
+                                            </p>
+                                        </div>
                                         {wallets.length ? (
                                             wallets.map(wallet => (
                                                 <div
                                                     key={wallet.id}
-                                                    className={`rounded-xl border px-3 py-2 transition ${
+                                                    className={`group relative rounded-xl border transition-all duration-200 ${
                                                         highlightWalletId === wallet.id
-                                                            ? "border-green-400 bg-green-50"
+                                                            ? "border-green-400 bg-linear-to-br from-green-50 to-white shadow-md"
                                                             : selectedWalletId === wallet.id
-                                                                ? "border-green-200 bg-green-50/70"
-                                                                : "border-gray-100 bg-gray-50 hover:border-green-200"
+                                                                ? "border-green-300 bg-linear-to-br from-green-50/80 to-white shadow-sm"
+                                                                : "border-gray-200 bg-white hover:border-green-300 hover:shadow-md"
                                                     }`}
                                                 >
-                                                    <div className="flex flex-col gap-2 sm:flex-row sm:items-start sm:justify-between">
-                                                        <button
-                                                            type="button"
-                                                            className="flex flex-1 items-center justify-between gap-3 rounded-lg bg-white/70 px-2 py-1 text-left transition hover:bg-white"
-                                                            onClick={() => {
-                                                                setSelectedWalletId(wallet.id);
-                                                                setIsWalletInfoOpen(false);
-                                                            }}
-                                                        >
-                                                            <div>
-                                                                <p className="text-sm font-semibold text-gray-900">{wallet.name}</p>
-                                                                <p className="text-xs text-gray-500">{wallet.description || "Không có mô tả"}</p>
-                                                            </div>
-                                                            <div className="flex items-center gap-2">
-                                                                <div className="text-right">
-                                                                    <p className="text-xs text-gray-400">Số dư</p>
-                                                                    <p className="text-sm font-semibold text-gray-900">
-                                                                        {(wallet.current_balance ?? 0).toLocaleString("vi-VN")} ₫
+                                                    <div className="p-3">
+                                                        <div className="flex items-start justify-between gap-3">
+                                                            {/* Left: Wallet Info */}
+                                                            <button
+                                                                type="button"
+                                                                className="flex-1 text-left transition-opacity hover:opacity-80"
+                                                                onClick={() => {
+                                                                    setSelectedWalletId(wallet.id);
+                                                                    setIsWalletInfoOpen(false);
+                                                                }}
+                                                            >
+                                                                <div className="space-y-1">
+                                                                    <div className="flex items-center gap-2">
+                                                                        <p className="text-sm font-semibold text-gray-900">{wallet.name}</p>
+                                                                        {selectedWalletId === wallet.id && (
+                                                                            <HiCheckCircle className="text-green-500 text-base shrink-0" />
+                                                                        )}
+                                                                    </div>
+                                                                    <p className="text-xs text-gray-500 line-clamp-1">
+                                                                        {wallet.description || "Không có mô tả"}
                                                                     </p>
                                                                 </div>
-                                                                {selectedWalletId === wallet.id && (
-                                                                    <HiCheckCircle className="text-green-500 text-lg" />
-                                                                )}
+                                                            </button>
+
+                                                            {/* Right: Balance */}
+                                                            <div className="shrink-0 text-right">
+                                                                <p className="text-[10px] font-medium uppercase tracking-wide text-gray-400 mb-0.5">
+                                                                    Số dư
+                                                                </p>
+                                                                <p className="text-base font-bold text-gray-900">
+                                                                    {formatCurrency.format(wallet.current_balance ?? 0)}
+                                                                </p>
                                                             </div>
-                                                        </button>
-                                                        <div className="flex items-center justify-end gap-1">
+                                                        </div>
+
+                                                        {/* Action Buttons */}
+                                                        <div className="mt-3 flex items-center justify-end gap-2 border-t border-gray-100 pt-3">
                                                             <button
                                                                 type="button"
                                                                 title="Thêm tiền"
@@ -247,7 +278,7 @@ export default function HeaderHome({
                                                                     setIsAddMoneyModalOpen(true);
                                                                 }}
                                                                 aria-label={`Thêm tiền vào ví ${wallet.name}`}
-                                                                className="rounded-full border border-gray-200 p-1.5 text-gray-500 transition hover:border-green-300 hover:text-green-600"
+                                                                className="flex h-8 w-8 items-center justify-center rounded-lg border border-gray-200 bg-white text-gray-500 transition-all duration-200 hover:border-green-300 hover:bg-green-50 hover:text-green-600 active:scale-[0.96]"
                                                             >
                                                                 <HiOutlinePlusCircle className="text-base" />
                                                             </button>
@@ -258,7 +289,7 @@ export default function HeaderHome({
                                                                 onClick={() => {
                                                                     setEditingWallet(wallet);
                                                                 }}
-                                                                className="rounded-full border border-gray-200 p-1.5 text-gray-500 transition hover:border-blue-300 hover:text-blue-600"
+                                                                className="flex h-8 w-8 items-center justify-center rounded-lg border border-gray-200 bg-white text-gray-500 transition-all duration-200 hover:border-blue-300 hover:bg-blue-50 hover:text-blue-600 active:scale-[0.96]"
                                                             >
                                                                 <HiOutlinePencilSquare className="text-base" />
                                                             </button>
@@ -271,7 +302,7 @@ export default function HeaderHome({
                                                                     event.stopPropagation();
                                                                     handleDeleteWallet(wallet);
                                                                 }}
-                                                                className="rounded-full border border-gray-200 p-1.5 text-gray-500 transition hover:border-red-300 hover:text-red-600 disabled:cursor-not-allowed disabled:opacity-60"
+                                                                className="flex h-8 w-8 items-center justify-center rounded-lg border border-gray-200 bg-white text-gray-500 transition-all duration-200 hover:border-red-300 hover:bg-red-50 hover:text-red-600 active:scale-[0.96] disabled:cursor-not-allowed disabled:opacity-40 disabled:hover:border-gray-200 disabled:hover:bg-white disabled:hover:text-gray-500"
                                                             >
                                                                 {deletingWalletId === wallet.id ? (
                                                                     <span className="text-[10px] font-semibold">...</span>
@@ -316,7 +347,10 @@ export default function HeaderHome({
                             className="px-5 py-2.5 bg-linear-to-r from-blue-500 to-blue-600 text-white rounded-xl hover:from-blue-600 hover:to-blue-700 transition-all duration-200 font-semibold text-sm shadow-md hover:shadow-lg hover:scale-105 active:scale-95">
                             ADD WALLET
                         </button>
-                        <button  style={{borderRadius: '12px'}} className="px-5 py-2.5 bg-linear-to-r from-green-500 to-green-600 text-white rounded-xl hover:from-green-600 hover:to-green-700 transition-all duration-200 font-semibold text-sm shadow-md hover:shadow-lg hover:scale-105 active:scale-95">
+                        <button
+                            style={{borderRadius: '12px'}}
+                            onClick={() => setIsAddTransactionModalOpen(true)}
+                            className="px-5 py-2.5 bg-linear-to-r from-green-500 to-green-600 text-white rounded-xl hover:from-green-600 hover:to-green-700 transition-all duration-200 font-semibold text-sm shadow-md hover:shadow-lg hover:scale-105 active:scale-95">
                             ADD TRANSACTION
                         </button>
                         <button style={{borderRadius: '50%'}}
@@ -352,6 +386,16 @@ export default function HeaderHome({
                         setIsAddMoneyModalOpen(false);
                         setWalletForDeposit(null);
                     }}
+                />
+                <AddTransactionModal
+                    isOpen={isAddTransactionModalOpen}
+                    onClose={() => setIsAddTransactionModalOpen(false)}
+                    wallets={wallets}
+                    onTransactionCreated={() => {
+                        onTransactionCreated?.();
+                        setIsAddTransactionModalOpen(false);
+                    }}
+                    onWalletUpdated={handleWalletEdited}
                 />
             </div>
         </>
