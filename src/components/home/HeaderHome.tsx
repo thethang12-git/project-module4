@@ -5,7 +5,7 @@ import { HiChevronDown } from "react-icons/hi"
 import { useEffect, useMemo, useRef, useState } from "react";
 import { useAppDispatch } from '@/src/store/hooks';
 import  { setUser} from "@/src/store/slices/user";
-import SideBar from "../sidebar"
+import UserDropdown from "./UserDropdown"
 import SearchModal from "@/src/components/search";
 import DateRangePicker from "@/src/components/dateRangePicker";
 import AddWalletModal from "@/src/components/wallet/AddWalletModal";
@@ -44,6 +44,9 @@ export default function HeaderHome({
 
     const formattedTotal = formatCurrency.format(totalBalance);
     const [avatar, setAvatar] = useState<string | null>(null);
+    const [username, setUsername] = useState<string>("");
+    const [email, setEmail] = useState<string>("");
+    const [isUserDropdownOpen, setIsUserDropdownOpen] = useState(false);
     const [isWalletModalOpen, setIsWalletModalOpen] = useState(false);
     const [isWalletInfoOpen, setIsWalletInfoOpen] = useState(false);
     const [highlightWalletId, setHighlightWalletId] = useState<string | number | null>(null);
@@ -61,12 +64,16 @@ export default function HeaderHome({
         const email = localStorage.getItem("email");
         const avatar = localStorage.getItem("avatar");
         if(user && email)  {
-            dispatch(setUser(JSON.parse(user)));
+            const parsedUser = JSON.parse(user);
+            const parsedEmail = JSON.parse(email);
+            dispatch(setUser(parsedUser));
+            setUsername(parsedUser);
+            setEmail(parsedEmail);
             if (avatar) {
                 setAvatar(JSON.parse(avatar));
             }
         }
-    }, []);
+    }, [dispatch]);
 
     useEffect(() => {
         if (recentWallet?.id) {
@@ -344,11 +351,33 @@ export default function HeaderHome({
                             className="px-5 py-2.5 bg-linear-to-r from-green-500 to-green-600 text-white rounded-xl hover:from-green-600 hover:to-green-700 transition-all duration-200 font-semibold text-sm shadow-md hover:shadow-lg hover:scale-105 active:scale-95">
                             ADD TRANSACTION
                         </button>
-                        <button style={{borderRadius: '50%'}}
-                            aria-label="Open sidebar"
-                            className="w-11 h-11 bg-linear-to-br from-gray-200 to-gray-300 rounded-full flex items-center justify-center hover:from-gray-300 hover:to-gray-400 transition-all duration-200 font-bold text-gray-700 shadow-md hover:shadow-lg hover:scale-110 active:scale-95">
-                            <SideBar avatar={avatar} />
-                        </button>
+                        <div className="relative">
+                            <button
+                                style={{ borderRadius: '50%' }}
+                                aria-label="Open user menu"
+                                onClick={() => setIsUserDropdownOpen(!isUserDropdownOpen)}
+                                className="w-11 h-11 bg-linear-to-br from-blue-400 to-purple-500 rounded-full flex items-center justify-center hover:from-blue-500 hover:to-purple-600 transition-all duration-200 font-bold text-white shadow-md hover:shadow-lg hover:scale-110 active:scale-95"
+                            >
+                                {avatar ? (
+                                    <img
+                                        src={avatar}
+                                        alt={username}
+                                        className="w-full h-full rounded-full object-cover"
+                                    />
+                                ) : (
+                                    <span className="text-lg">
+                                        {username ? username.charAt(0).toUpperCase() : "N"}
+                                    </span>
+                                )}
+                            </button>
+                            <UserDropdown
+                                isOpen={isUserDropdownOpen}
+                                onClose={() => setIsUserDropdownOpen(false)}
+                                avatar={avatar}
+                                username={username}
+                                email={email}
+                            />
+                        </div>
                     </div>
                 </div>
                 <AddWalletModal

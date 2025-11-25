@@ -25,51 +25,6 @@ export default function Register() {
             password: "",
             OTP: "",
         },
-    //     onSubmit: async (values) => {
-    //         if (toggle) {
-    //             try {
-    //                 const user = await UserService.validateUser(values.email);
-    //                 if (!user) {
-    //                     otp.current = Math.floor(100000 + Math.random() * 900000);
-    //
-    //                     const template = {
-    //                         userName: values.name,
-    //                         reply_to: values.email,
-    //                         password: values.password,
-    //                         passcode: otp.current,
-    //                     };
-    //
-    //                     emailjs
-    //                         .send(
-    //                             "service_0zq428t",
-    //                             "template_a1un4ul",
-    //                             template,
-    //                             "nlUaqVMyxnXcmXKTk"
-    //                         )
-    //                         .then(() => {
-    //                             alert("Xác minh Email!");
-    //                             setToggle(false);
-    //                             setTimeout(() => (otp.current = undefined), 300 * 1000);
-    //                         })
-    //                         .catch(() => alert("Lỗi khi gửi email!"));
-    //                 } else {
-    //                     alert("Email đã tồn tại!");
-    //                     router.push("/login");
-    //                 }
-    //             } catch (err) {
-    //                 alert(err);
-    //             }
-    //         } else {
-    //             if (Number(values.OTP) === otp.current) {
-    //                 await UserService.addUser(values);
-    //                 alert("Tạo tài khoản thành công!");
-    //                 router.push("/login");
-    //             } else {
-    //                 alert("Sai OTP!");
-    //             }
-    //         }
-    //     },
-    // });
         onSubmit: async (values) => {
             if (toggle) {
                 try {
