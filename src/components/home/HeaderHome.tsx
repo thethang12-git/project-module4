@@ -12,6 +12,8 @@ import AddWalletModal from "@/src/components/wallet/AddWalletModal";
 import EditWalletModal from "@/src/components/wallet/EditWalletModal";
 import AddMoneyModal from "@/src/components/wallet/AddMoneyModal";
 import {setTransactions} from "@/src/store/slices/transactions";
+import AddTransactionModal from "@/src/components/home/AddTransactionModal";
+import UserService from "@/src/service/dataService";
 
 export default function HeaderHome({
     setTransaction,
@@ -330,7 +332,7 @@ export default function HeaderHome({
                         >
                             <HiOutlineChatBubbleLeftRight className="text-xl text-gray-600 group-hover:text-purple-600 transition-colors" />
                         </button>
-                        <SearchModal />
+                        <SearchModal setTransaction={setTransaction} />
                         <button style={{borderRadius: '12px'}}
                             onClick={() => setIsWalletModalOpen(true)}
                             className="px-5 py-2.5 bg-linear-to-r from-blue-500 to-blue-600 text-white rounded-xl hover:from-blue-600 hover:to-blue-700 transition-all duration-200 font-semibold text-sm shadow-md hover:shadow-lg hover:scale-105 active:scale-95">
