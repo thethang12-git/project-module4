@@ -92,6 +92,17 @@ const data = {
     },
   ],
 };
+    const options = {
+        responsive: true,
+        plugins: {
+            legend: { position: 'bottom' as const},
+            title: {
+                display: true,
+                text: 'Pie Bar Chart',
+                font: { size: 18 }
+            },
+        },
+    };
   return (
 <div
     
@@ -118,7 +129,7 @@ const data = {
         </div>
         {/* Chart */}
         <div className="flex-1 flex items-center justify-center">
-            <Pie data={data} />
+            <Pie data={data} options={options}/>
         </div>
     </div>
 </div>
