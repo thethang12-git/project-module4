@@ -4,6 +4,7 @@ import UserService from "@/src/service/dataService"
 import { Category } from "@/src/types/category"
 import CategoryCard from "@/src/components/categories/CategoryCard"
 import CategoryFormModal from "@/src/components/categories/CategoryFormModal"
+import HeaderHome from "@/src/components/home/HeaderHome"
 
 export default function Categories() {
     const [categories, setCategories] = useState<Category[]>([])
@@ -129,20 +130,21 @@ export default function Categories() {
     const expenseCategories = categories.filter(function(cat) { return cat.is_income === false })
 
     return (
-        <div className="min-h-screen bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50 px-4 py-8">
-            <div className="mx-auto max-w-6xl">
+        <div className="min-h-screen bg-white">
+            <HeaderHome />
+            <div className="mx-auto max-w-6xl px-4 py-8">
                 <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-8">
                     <div>
                         <h1 className="text-3xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
-                            Quản lý Danh mục
+                            Categories
                         </h1>
-                        <p className="text-sm text-gray-600 mt-1">Tổ chức và quản lý các danh mục thu chi của bạn</p>
                     </div>
                     <button
+                        style={{borderRadius:'9px'}}
                         onClick={handleAddCategory}
-                        className="px-6 py-3 bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white text-sm font-medium rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105"
+                        className=" px-6 py-3 bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white text-sm font-medium rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105"
                     >
-                        <span className="flex items-center gap-2">
+                        <span  className="flex items-center gap-2 ">
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="w-5 h-5">
                                 <path strokeLinecap="round" strokeLinejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
                             </svg>
@@ -164,7 +166,7 @@ export default function Categories() {
                     </div>
                 ) : (
                     <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-                        <div className="bg-white rounded-2xl shadow-lg p-6 border-t-4 border-green-500">
+                        <div className="bg-white rounded-2xl shadow-md hover:shadow-xl transition-shadow duration-300 p-6 border-t-4 border-green-500">
                             <div className="flex items-center gap-3 mb-4">
                                 <div className="p-2 bg-green-100 rounded-lg">
                                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="w-6 h-6 text-green-600">
@@ -202,7 +204,7 @@ export default function Categories() {
                             </div>
                         </div>
 
-                        <div className="bg-white rounded-2xl shadow-lg p-6 border-t-4 border-red-500">
+                        <div className="bg-white rounded-2xl shadow-md hover:shadow-xl transition-shadow duration-300 p-6 border-t-4 border-red-500">
                             <div className="flex items-center gap-3 mb-4">
                                 <div className="p-2 bg-red-100 rounded-lg">
                                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="w-6 h-6 text-red-600">
