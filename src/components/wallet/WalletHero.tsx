@@ -2,13 +2,17 @@
 
 import {FiPlusCircle} from "react-icons/fi";
 import {WalletSummary} from "@/src/types/wallet";
+import AddWalletModal from "@/src/components/wallet/AddWalletModal";
+import {useState} from "react";
 
 type WalletHeroProps = {
     summary: WalletSummary;
-    onAddWallet?: () => void;
+    onAddWallet?: (a:object) => void;
 };
 
 const WalletHero = ({summary, onAddWallet}: WalletHeroProps) => {
+    const [isWalletModalOpen, setIsWalletModalOpen] = useState(false);
+
     return (
         <header className="flex flex-wrap items-center justify-between gap-6">
             <div>
@@ -23,12 +27,21 @@ const WalletHero = ({summary, onAddWallet}: WalletHeroProps) => {
                 </p>
             </div>
             <button
-                onClick={onAddWallet}
-                className="inline-flex items-center gap-2 rounded-full bg-slate-900 px-6 py-3 text-sm font-medium text-white shadow-lg shadow-slate-900/20 transition hover:-translate-y-0.5 hover:bg-slate-800"
+                onClick={() => setIsWalletModalOpen(true)}
+                className="rounded-4 inline-flex items-center gap-2 bg-slate-900 px-6 py-3 text-sm font-medium text-white shadow-lg shadow-slate-900/20 transition hover:-translate-y-0.5 hover:bg-slate-800"
             >
                 <FiPlusCircle className="h-4 w-4"/>
                 Thêm ví mới
             </button>
+            <AddWalletModal
+                isOpen={isWalletModalOpen}
+                onClose={() => setIsWalletModalOpen(false)}
+                onCreated={(wallet):void => {
+                    if (onAddWallet) {
+                        onAddWallet(wallet)
+                    }
+                }}
+            />
         </header>
     );
 };

@@ -2,7 +2,7 @@
 
 import {FiCreditCard, FiTrendingDown, FiTrendingUp} from "react-icons/fi";
 import {Wallet} from "@/src/types/wallet";
-import type {ReactNode} from "react";
+import {ReactNode, useEffect, useState} from "react";
 
 type WalletListSectionProps = {
     wallets: Wallet[];
@@ -21,7 +21,9 @@ const WalletListSection = ({wallets}: WalletListSectionProps) => {
         card: <FiCreditCard className="h-5 w-5"/>,
         savings: <FiTrendingUp className="h-5 w-5"/>
     };
-
+    useEffect(() => {
+        console.log('updated wallets');
+    }, [wallets]);
     return (
         <section className="space-y-6 rounded-3xl bg-white/90 p-6 shadow-sm shadow-slate-200 backdrop-blur">
             <header className="flex items-center justify-between">

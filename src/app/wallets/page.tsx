@@ -8,7 +8,7 @@ import WalletListSection from "@/src/components/wallet/WalletListSection";
 import WalletActivityPanel from "@/src/components/wallet/WalletActivityPanel";
 import WalletQuickActions from "@/src/components/wallet/WalletQuickActions";
 import WalletService from "@/src/service/walletService";
-import {WalletDashboardData} from "@/src/types/wallet";
+import {Wallet, WalletDashboardData} from "@/src/types/wallet";
 import SideBar from "@/src/components/sidebar";
 
 export default function Wallets() {
@@ -18,6 +18,15 @@ export default function Wallets() {
     const [error, setError] = useState<string | null>(null);
     const [userId, setUserId] = useState<string | null>(null);
     const [avatar, setAvatar] = useState<string | null>(null);
+    const onAddWallet = (data: Wallet) => {
+        setDashboard(prev => {
+            if (!prev) return prev;
+            return {
+                ...prev,
+                wallets: [...prev.wallets, data]
+            }
+        });
+    };
 
     useEffect(() => {
         const storedUserId = localStorage.getItem("userId");
@@ -116,7 +125,7 @@ export default function Wallets() {
                     <div className="flex items-center gap-3">
                         <button
                             onClick={() => router.push("/home")}
-                            className="rounded-full border border-transparent bg-slate-900 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-slate-800"
+                            className="rounded-4 border border-transparent bg-slate-900 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-slate-800"
                         >
                             Về trang chủ
                         </button>
@@ -126,7 +135,7 @@ export default function Wallets() {
                     </div>
                 </div>
 
-                <WalletHero summary={dashboard.summary}/>
+                <WalletHero onAddWallet={onAddWallet} summary={dashboard.summary}/>
                 <WalletSummaryCards summary={dashboard.summary}/>
 
                 <div className="grid gap-6 lg:grid-cols-3">

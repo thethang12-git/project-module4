@@ -43,6 +43,24 @@
       "name": "Savings",
       "default_balance": 5000,
       "current_balance": 20150200
+    },
+    {
+      "id": "52e9",
+      "userId": "1",
+      "name": "ví siêu mới",
+      "description": "123123123",
+      "icon": ":wallet:",
+      "default_balance": 0,
+      "current_balance": 0
+    },
+    {
+      "id": "3f15",
+      "userId": "1",
+      "name": "ádasd",
+      "description": "",
+      "icon": ":wallet:",
+      "default_balance": 0,
+      "current_balance": 0
     }
   ],
   "categories": [
