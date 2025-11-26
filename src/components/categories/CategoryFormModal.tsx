@@ -54,7 +54,8 @@ export default function CategoryFormModal(props: CategoryFormModalProps) {
             setSelectedType(event.target.value);
         }
     }
-    
+
+
     function handleSave() {
         if (name.trim() === "") {
             alert("Vui lòng nhập tên danh mục");
@@ -71,18 +72,27 @@ export default function CategoryFormModal(props: CategoryFormModalProps) {
     }
     
     function handleCancel() {
+        setAnimation(false)
         setName("");
         setNote("");
-        onClose();
+        setTimeout(() => onClose(),300);
     }
-    
+    const [animation, setAnimation] = useState<boolean>(false);
+    useEffect(() => {
+        if(isOpen){
+            setAnimation(true)
+        }
+        else {
+            setAnimation(false);
+        }
+    }, [isOpen]);
     if (isOpen === false) {
         return null;
     }
     
     return (
-        <div className="fixed inset-0 bg-black bg-opacity-60 backdrop-blur-sm flex items-center justify-center z-50 p-4">
-            <div className="bg-white rounded-2xl shadow-2xl p-8 w-full max-w-lg mx-4 transform transition-all">
+        <div className="fixed inset-0 bg-opacity-60 backdrop-blur-sm flex items-center justify-center z-50 p-4 transform transition-all duration-500">
+            <div className={`bg-white rounded-2xl shadow-2xl p-8 w-full max-w-lg mx-4 transform transition-all duration-400 ${animation ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-100'}`}>
                 <div className="flex items-center gap-3 mb-6">
                     <div className="p-3 bg-gradient-to-br from-blue-500 to-purple-600 rounded-xl">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="w-6 h-6 text-white">
@@ -141,12 +151,14 @@ export default function CategoryFormModal(props: CategoryFormModalProps) {
                 
                 <div className="flex justify-end gap-3 mt-8">
                     <button
+                        style={{borderRadius:'8px'}}
                         onClick={handleCancel}
                         className="px-6 py-3 bg-gray-100 hover:bg-gray-200 text-gray-700 font-medium rounded-xl transition-all duration-200"
                     >
                         Hủy
                     </button>
                     <button
+                        style={{borderRadius:'8px'}}
                         onClick={handleSave}
                         className="px-6 py-3 bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white font-medium rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105"
                     >
