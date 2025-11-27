@@ -3,7 +3,7 @@ import { FiGlobe } from "react-icons/fi"
 import { HiOutlineChatBubbleLeftRight, HiCheckCircle, HiOutlinePencilSquare, HiOutlinePlusCircle, HiOutlineTrash } from "react-icons/hi2"
 import { HiChevronDown } from "react-icons/hi"
 import { useEffect, useMemo, useRef, useState } from "react";
-import { useAppDispatch } from '@/src/store/hooks';
+import {useAppDispatch, useAppSelector} from '@/src/store/hooks';
 import  { setUser} from "@/src/store/slices/user";
 import UserDropdown from "./UserDropdown"
 import SearchModal from "@/src/components/search";
@@ -14,6 +14,8 @@ import AddMoneyModal from "@/src/components/wallet/AddMoneyModal";
 import {setTransactions} from "@/src/store/slices/transactions";
 import AddTransactionModal from "@/src/components/home/AddTransactionModal";
 import UserService from "@/src/service/dataService";
+import {router} from "next/client";
+import {any} from "prop-types";
 
 export default function HeaderHome({
     setTransaction,
@@ -59,6 +61,7 @@ export default function HeaderHome({
     const [deletingWalletId, setDeletingWalletId] = useState<string | number | null>(null);
     const [deleteError, setDeleteError] = useState<string | null>(null);
     const [isAddTransactionModalOpen, setIsAddTransactionModalOpen] = useState(false);
+    const backUpAvatar: any = useAppSelector((state) => state.user.avatar);
     useEffect(() => {
         const user = localStorage.getItem("user");
         const email = localStorage.getItem("email");
@@ -360,9 +363,17 @@ export default function HeaderHome({
                             >
                                 {avatar ? (
                                     <img
-                                        src={avatar}
+                                        src={ avatar }
                                         alt={username}
                                         className="w-full h-full rounded-full object-cover"
+                                        onError={(e) => {
+                                            if(e.currentTarget.src !== backUpAvatar) {
+                                                e.currentTarget.src = backUpAvatar
+                                            }
+                                            else {
+                                                setAvatar(null)
+                                            }
+                                        }}
                                     />
                                 ) : (
                                     <span className="text-lg">

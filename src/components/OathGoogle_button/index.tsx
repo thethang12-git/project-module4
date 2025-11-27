@@ -2,17 +2,20 @@
 import { GoogleOAuthProvider, GoogleLogin } from "@react-oauth/google";
 import { useRouter } from "next/navigation";
 import UserService from "@/src/service/dataService";
+import {useAppDispatch} from "@/src/store/hooks";
+import {setAvatar} from "@/src/store/slices/user";
 
 const clientId = "1090829690859-i89enmif243f8eb3k59gfimmsrmuccju.apps.googleusercontent.com";
 
 function GoogleButton() {
     const router = useRouter();
-
+    const dispatch = useAppDispatch();
     const persistSession = (opts: { email: string; name: string; avatar?: string; userId: string | number }) => {
         localStorage.setItem("email", JSON.stringify(opts.email));
         localStorage.setItem("user", JSON.stringify(opts.name));
         if (opts.avatar) {
             localStorage.setItem("avatar", JSON.stringify(opts.avatar));
+            dispatch(setAvatar(opts.avatar));
         }
         localStorage.setItem("userId", JSON.stringify(opts.userId));
     };
