@@ -6,19 +6,6 @@ import { useEffect, useState } from "react";
 import { useSelector } from 'react-redux';
 import Switch from '@mui/material/Switch';
 import CloseButton from 'react-bootstrap/CloseButton';
-// function randomColor() {
-//     const r = Math.floor(Math.random() * 256);
-//     const g = Math.floor(Math.random() * 256);
-//     const b = Math.floor(Math.random() * 256);
-//     return `rgba(${r}, ${g}, ${b}, 0.2)`; // Màu nền với độ mờ
-// }
-//
-// function randomBorderColor() {
-//     const r = Math.floor(Math.random() * 256);
-//     const g = Math.floor(Math.random() * 256);
-//     const b = Math.floor(Math.random() * 256);
-//     return `rgba(${r}, ${g}, ${b}, 1)`; // Màu viền không mờ
-// }
 export default function PieChart({ open, onClose,setSwitch,switchState }: { open: boolean, onClose: () => void, setSwitch: React.Dispatch<React.SetStateAction<boolean>>, switchState: boolean }) {
 ChartJS.register(ArcElement, Tooltip, Legend);
     const [animation,setAnimation] = useState<boolean>(false);
@@ -44,7 +31,7 @@ ChartJS.register(ArcElement, Tooltip, Legend);
                     newCategories[index].value += item.money;
                 }
                 });
-            setCategories(newCategories);
+                setTimeout(() => setCategories(newCategories), 100);
             });
         }
     }, []);
@@ -60,8 +47,6 @@ const data = {
     {
       label: 'Amount',
       data: Categories.map((itm: any) => itm.value),
-      // backgroundColor: Array.from({ length: Categories.length }, randomColor),
-      // borderColor : Array.from({ length: Categories.length }, randomColor),
       backgroundColor: [
         'rgba(255, 99, 132, 0.2)',
         'rgba(54, 162, 235, 0.2)',

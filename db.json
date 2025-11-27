@@ -61,6 +61,15 @@
       "icon": ":wallet:",
       "default_balance": 0,
       "current_balance": 0
+    },
+    {
+      "id": "3246",
+      "userId": "27bd",
+      "name": "ádasd",
+      "description": "",
+      "icon": ":wallet:",
+      "default_balance": 0,
+      "current_balance": 0
     }
   ],
   "categories": [
@@ -460,6 +469,28 @@
       "money": -1000,
       "name": "Du lịch",
       "date": "2025-11-26",
+      "note": "",
+      "currency": "₫"
+    },
+    {
+      "id": "979a6c82-3557-4f30-8318-5032acbd44bb",
+      "userId": "27bd",
+      "walletId": "3246",
+      "money": 500000,
+      "name": "Nạp tiền vào ví",
+      "note": "",
+      "currency": "₫",
+      "categoryId": 5,
+      "date": "2025-11-27"
+    },
+    {
+      "id": "894a6302-2700-4498-b394-2461c6ff9630",
+      "userId": "27bd",
+      "walletId": "3246",
+      "categoryId": "2",
+      "money": -500000,
+      "name": "Food",
+      "date": "2025-11-27",
       "note": "",
       "currency": "₫"
     }

@@ -51,13 +51,15 @@ export default function VerticalChart({ open, onClose,setSwitch,switchState }: {
                                 if(outflow < localMin) {localMin = outflow;}
                             }
                         });
-                        setMonthlyData(
-                            (prev: any) => {
-                                const newData = [...prev];
-                                newData[month] = { inflow, outflow };
-                                return newData;
-                            }
-                        );
+                        setTimeout(() =>
+                                setMonthlyData(
+                                    (prev: any) => {
+                                        const newData = [...prev];
+                                        newData[month] = { inflow, outflow };
+                                        return newData;
+                                    })
+                            ,200)
+
                         setMaxValue(prev => Math.max(prev, localMax));
                         setMinValue(prev => Math.min(prev, localMin));
                     });                        
